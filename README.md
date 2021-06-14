@@ -1,2 +1,2 @@
-# sorting_algorithms
-sorthing 
+C - Sorting algorithms & Big O
+===============================
