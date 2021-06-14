@@ -1,5 +1,7 @@
-#ifndef SORT_H
-#define SORTH_H
+#ifndef SORTING_H
+#define SORTING_H
+
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -20,5 +22,4 @@ void print_array(const int *array, size_t size);
 void print_list(const listint_t *list);
 void bubble_sort(int *array, size_t size);
 void insertion_sort_list(listint_t **list);
-#endif /*SORT_H*/
-
+#endif
