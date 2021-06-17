@@ -1,78 +1,89 @@
 #include "sort.h"
+
 /**
- * quick_sort - sorts an array of integers in ascending order
- * using the quick sort sort algorithm
- * @array: pointer to the array
- * @size: size of the array
+ * quick_sort - sort an array of ints in ascending order (QuickSort)
+ * @array: array of integers
+ * @size: number of elements in array
+ *
+ * Description: implementing Lomuto parittion scheme
+ * Return: nothing!
  */
 void quick_sort(int *array, size_t size)
 {
-	recursive_quick_sort(array, size, 0, size - 1);
+	if (!array || size < 2)
+		return;
+	quicker_sort(array, size, 0, size - 1);
 }
 
 /**
- * recursive_quick_sort - recursive part
- * @array: array to use
- * @size: size
- * @start: start index
- * @end: end index
+ * quicker_sort - does the actual recursive QuickSort
+ * @array: array of integers
+ * @size: number of elements in array
+ * @lo: first index of array
+ * @hi: last index of array
+ *
+ * Return: nothing!
  */
-void recursive_quick_sort(int *array, size_t size, int start, int end)
+void quicker_sort(int *array, size_t size, int lo, int hi)
 {
-	int p;
+	int idx;
 
-	if (start < end)
+	if (lo < hi)
 	{
-		p = partition(array, size, start, end);
-
-		recursive_quick_sort(array, size, start, p - 1);
-		recursive_quick_sort(array, size, p + 1, end);
+		idx = partition(array, size, lo, hi);
+		quicker_sort(array, size, lo, idx - 1);
+		quicker_sort(array, size, idx + 1, hi);
 	}
-
 }
-
 /**
- * partition - partition the array
- * @array: array to use
- * @size: size
- * @start: start index
- * @end: end index
- * Return: partition index
+ * partition - partition through an array of integers
+ * @array: array of integers
+ * @size: number of elements of array
+ * @lo: first index of array
+ * @hi: last index of array
+ *
+ * Description: all values must be accurate
+ * Return: new index position
  */
-size_t partition(int *array, size_t size, int start, int end)
+int partition(int *array, size_t size, int lo, int hi)
 {
-	int pivot = array[end];
-	int i = start - 1;
-	int j;
+	int pivot = array[hi], idx = lo, xdi;
 
-	for (j = start; j <= end - 1; j++)
+	for (xdi = lo; xdi <= hi - 1; xdi++)
 	{
-		if (array[j] < pivot)
+		if (array[xdi] < pivot)
 		{
-
-			i++;
-			swap_int1(array, i, j);
-			print_array(array, size);
+			if (idx != xdi)
+			{
+				swap(&array[idx], &array[xdi]);
+				print_array(array, size);
+			}
+			idx++;
 		}
-
 	}
-	swap_int1(array, i + 1, end);
-	print_array(array, size);
-	return (i + 1);
+	if (pivot != array[idx])
+	{
+		swap(&array[idx], &array[hi]);
+		print_array(array, size);
+	}
+	return (idx);
 }
 
 /**
- * swap_int1 - swap variable values
- * @array: array to use
- * @a: index 1
- * @b: index 2
+ * swap - swaps the address values of two pointers
+ * @ptr_a: pointer to integer
+ * @ptr_b: pointer to integer
+ *
+ * Return: nothing!
  */
-void swap_int1(int *array, int a, int b)
+void swap(int *ptr_a, int *ptr_b)
 {
-
 	int tmp;
 
-	tmp = array[a];
-	array[a] = array[b];
-	array[b] = tmp;
+	if (!ptr_a || !ptr_b)
+		return;
+
+	tmp = *ptr_a;
+	*ptr_a = *ptr_b;
+	*ptr_b = tmp;
 }
